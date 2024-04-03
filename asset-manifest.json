@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/binance_api/static/css/main.29b44ab3.css",
+    "main.js": "/binance_api/static/js/main.e8eb95f2.js",
+    "static/js/453.4fa7d4de.chunk.js": "/binance_api/static/js/453.4fa7d4de.chunk.js",
+    "index.html": "/binance_api/index.html",
+    "main.29b44ab3.css.map": "/binance_api/static/css/main.29b44ab3.css.map",
+    "main.e8eb95f2.js.map": "/binance_api/static/js/main.e8eb95f2.js.map",
+    "453.4fa7d4de.chunk.js.map": "/binance_api/static/js/453.4fa7d4de.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.29b44ab3.css",
+    "static/js/main.e8eb95f2.js"
+  ]
+}
