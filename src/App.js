@@ -8,19 +8,28 @@ IgrFinancialChartModule.register();
 function App() {
   const [candleData, setCandleData] = useState([]);
   const [interval, setInterval] = useState('1M');
-  const [indexSplit, setIndexSplit] = useState([]);
-  const [indexDiv, setIndexDiv] = useState([]);
 
   useEffect(() => {
-    fetchData(interval, setCandleData, setIndexSplit, setIndexDiv);
+    fetchData(interval, setCandleData);
   }, [interval]);
+  
+  const handleRefreshClick = () => {
+    fetchData(interval, setCandleData);
+  };
 
   const handleIntervalChange = e => {
     setInterval(e.target.value);
   };
 
-  const handleRefreshClick = () => {
-    fetchData();
+  const getCalloutContent = (candleData) => {
+    console.log(candleData);
+    const labelColor = candleData?.dataContext.sell ? 'red' : 'black'; // Set color based on 'sell' property
+    const contentStyle = { color: labelColor }; // Apply color to label text
+    return (
+      <div style={contentStyle}>
+        {candleData.dataContext.info}
+      </div>
+    );
   };
 
   return (
@@ -68,8 +77,8 @@ function App() {
             calloutsXMemberPath={candleData.Date}
             calloutsYMemberPath="Close"
             calloutsLabelMemberPath = "info"
-            calloutsContentMemberPath="info"
             crosshairsSnapToData={false}
+            calloutsContentMemberPath={getCalloutContent}
           />
         ) : (
           <Loader />

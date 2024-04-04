@@ -1,4 +1,4 @@
-const fetchData = async (interval, setCandleData, setIndexSplit, setIndexDiv) => {
+const fetchData = async (interval, setCandleData) => {
   const intervalLimits = {
     '1m': 24 * 60,
     '5m': 24 * 60 * 7,
@@ -37,9 +37,6 @@ const processData = candles => {
   let maxClose = 0;
   let minIndex = 0;
   let maxIndex = 0;
-  let indexSplit = [];
-  let indexDiv = [];
-
   const processedData = candles.map((candle, index) => {
     const candleData = {
       Date: new Date(candle[0]),
@@ -47,7 +44,8 @@ const processData = candles => {
       High: parseFloat(candle[2]),
       Low: parseFloat(candle[3]),
       Close: parseFloat(candle[4]),
-      Volume: parseFloat(candle[5])
+      Volume: parseFloat(candle[5]),
+      sell: false
     };
 
     if (candleData.Close < minClose) {
@@ -59,24 +57,18 @@ const processData = candles => {
       maxIndex = index;
     }
 
-    if (indexSplit.length < 5 && Math.random() < 0.1) {
-      const randomIndex = Math.floor(Math.random() * candles.length);
-      indexSplit.push(randomIndex);
-    }
-
-    if (indexDiv.length < 5 && Math.random() < 0.1) {
-      const randomIndex = Math.floor(Math.random() * candles.length);
-      indexDiv.push(randomIndex);
-    }
-
     return candleData;
   });
 
+  const indexSplit = Array.from({ length: 5 }, () => Math.floor(Math.random() * candles.length));
+  const indexDiv = Array.from({ length: 5 }, () => Math.floor(Math.random() * candles.length));
   indexSplit.forEach(idx => {
-    processedData[idx].info = `Sell ↓ ${processedData[idx].Close}`;
+    processedData[idx].info = "Sell ↓ " + processedData[idx].Close;
+    processedData[idx].sell = true;
   });
   indexDiv.forEach(idx => {
-    processedData[idx].info = `Buy ↑ ${processedData[idx].Close}`;
+    processedData[idx].info = "Buy ↑ " + processedData[idx].Close;
+    processedData[idx].sell = false;
   });
 
   processedData[minIndex].info = 'MIN';
@@ -84,5 +76,6 @@ const processData = candles => {
 
   return processedData;
 };
+
 
 export { fetchData };
