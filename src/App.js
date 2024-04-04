@@ -21,17 +21,6 @@ function App() {
     setInterval(e.target.value);
   };
 
-  const getCalloutContent = (candleData) => {
-    console.log(candleData);
-    const labelColor = candleData?.dataContext.sell ? 'red' : 'black'; // Set color based on 'sell' property
-    const contentStyle = { color: labelColor }; // Apply color to label text
-    return (
-      <div style={contentStyle}>
-        {candleData.dataContext.info}
-      </div>
-    );
-  };
-
   return (
     <div className="container sample">
       <div className="container">
@@ -77,8 +66,8 @@ function App() {
             calloutsXMemberPath={candleData.Date}
             calloutsYMemberPath="Close"
             calloutsLabelMemberPath = "info"
+            calloutsContentMemberPath="info"
             crosshairsSnapToData={false}
-            calloutsContentMemberPath={getCalloutContent}
           />
         ) : (
           <Loader />
